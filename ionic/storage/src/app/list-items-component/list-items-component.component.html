@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Items</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of items$ | async">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="item.image"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item.name }}</h2>
+        <p>Position: {{ item.position }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p>IP: {{ item.ip }}</p>
+        <ion-button fill="outline" size="small" color="danger" (click)="deleteItem(item.id)">Delete</ion-button>
+        <ion-button fill="outline" size="small" color="primary">Edit</ion-button>
+        <ion-button fill="outline" size="small" color="secondary" (click)="locateItem(item.id)">Locate</ion-button>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click) = "redirect()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

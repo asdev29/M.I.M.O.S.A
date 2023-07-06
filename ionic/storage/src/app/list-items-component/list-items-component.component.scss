@@ -1,0 +1,13 @@
+.img-container {
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  text-align: center;
+  line-height: 100px;
+}
+
+.image-error:before {
+  content: attr(data-name);
+  display: inline-block;
+  font-size: 1rem;
+}

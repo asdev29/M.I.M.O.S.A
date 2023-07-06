@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Link</ion-label>
+      <ion-input type="text" formControlName="link"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Image</ion-label>
+      <ion-input type="text" formControlName="image"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Position</ion-label>
+      <ion-input type="text" formControlName="position"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Quantity</ion-label>
+      <ion-input type="number" formControlName="quantity"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>IP</ion-label>
+      <ion-input type="text" formControlName="ip"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="!addItemForm.valid">Add Item</ion-button>
+  </form>
+</ion-content>
