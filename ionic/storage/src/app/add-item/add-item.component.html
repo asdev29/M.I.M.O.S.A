@@ -10,8 +10,7 @@
 <ion-content class="ion-padding">
 <ion-content class="ion-padding">
   <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-    <ion-item lines="none" class="custom-input" >
-      <ion-label position="floating">Name</ion-label>
+
     <ion-item lines="none" class="custom-input" >
       <ion-label position="floating">Name</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
@@ -20,20 +19,11 @@
 
     <ion-item lines="none">
       <ion-label position="floating">Link</ion-label>
-
-   <!--  <div *ngIf="addItemForm.get('name')?.invalid && addItemForm.get('name')?.touched" class="error-message">
-      Name is required
-    </div> -->
-
-
-    <ion-item lines="none">
-      <ion-label position="floating">Link</ion-label>
       <ion-input type="text" formControlName="link"></ion-input>
       <span slot="error"> Link must be a valid URL</span>
     </ion-item>
 
-    <ion-item lines="none">
-      <ion-label position="floating">Image</ion-label>
+
     <ion-item lines="none">
       <ion-label position="floating">Image</ion-label>
       <ion-input type="text" formControlName="image"></ion-input>
@@ -48,28 +38,18 @@
 
     <ion-item lines="none">
       <ion-label position="floating">Quantity</ion-label>
-    <ion-item lines="none">
-      <ion-label position="floating">Quantity</ion-label>
       <ion-input type="number" formControlName="quantity"></ion-input>
       <span slot="error"> Quantity is required and has to be greater than 0</span>
     </ion-item>
 
-    <ion-item lines="none">
-      <ion-label position="floating">IP</ion-label>
+
     <ion-item lines="none">
       <ion-label position="floating">IP</ion-label>
       <ion-input type="text" formControlName="ip"></ion-input>
       <span slot="error"> IP Format is invalids</span>
     </ion-item>
 
-    <ion-row>
-      <ion-col>
-        <ion-button expand="full" type="submit" [disabled]="!addItemForm.valid">Save</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button expand="full" color="light" (click)="back()">Back</ion-button>
-      </ion-col>
-    </ion-row>
+
     <ion-row>
       <ion-col>
         <ion-button expand="full" type="submit" [disabled]="!addItemForm.valid">Save</ion-button>
