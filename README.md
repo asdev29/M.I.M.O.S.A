@@ -27,7 +27,12 @@ LEDs : https://amzn.to/3VcoaIY
 1. Clone the repo
 2. pip install -r requirements.txt
 3. If you already have a database, Move it to the main directory.
-4. Run app.py Or .exe
+4. Run app.py for starting server
+5. Install  [https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi](node)
+6. Run `npm install -g @ionic/cli`  (only first time)
+7. Navigate to ionic/storage 
+8. run `npm install`
+9. run `ionic serve`
 
 ## dependencies:
 
