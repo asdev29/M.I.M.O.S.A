@@ -109,17 +109,17 @@ export class ItemService {
   }
 
   locateItem(item: any) {
-    let position = item['position'];
-    let ip = item['ip'];
+    let position = parseInt(item.position);
+    let ip = item.ip;
     let start_num = position- 1
-    return this.send_request(ip, start_num, position, [255, 255, 255]).pipe(
+    return this.sendRequest(ip, start_num, position, [255, 255, 255]).pipe(
       timeout(10000),
       catchError(error => {
         this.showToast('Error occurred during the first request:', "danger");
         throw error;
       }),
       delay(5000),
-      switchMap(() => this.send_request(ip, 0, 60, [0, 255, 0]).pipe(
+      switchMap(() => this.sendRequest(ip, 0, 60, [0, 255, 0]).pipe(
         timeout(10000),
         catchError(error => {
           this.showToast('Error occurred during the second request:', "danger");
@@ -129,12 +129,11 @@ export class ItemService {
     );
   }
 
-  send_request(target_ip: any, start_num: any, stop_num: any, color: any) {
-    const url = 'http://'+target_ip+'/json/state'
-    const state = {"seg": [{"id": 0, "start": start_num, "stop": stop_num, "col": [color]}]}
+  sendRequest(targetIp: string, startNum: number, stopNum: number, color: number[]){
+    const url = `http://${targetIp}/json/state`;
+    const state = {"seg": [{"id": 0, "start": startNum, "stop": stopNum, "col": color}]};
     return this.http.post(url, state);
   }
-
 
 
   editItem(id: string, item: any): Observable<void> {
