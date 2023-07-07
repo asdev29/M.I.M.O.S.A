@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../model';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,9 @@ import { ItemService } from '../item.service';
   imports: [IonicModule, CommonModule],
 })
 export class ListItemsComponentComponent implements OnInit {
+
   items$: Observable<Item[]> = this.service.items$;
+  searchTerm = '';
 
   constructor(
     private http: HttpClient,
@@ -26,16 +28,45 @@ export class ListItemsComponentComponent implements OnInit {
 
   ngOnInit() {}
 
-  deleteItem(id: number) {
+  deleteItem(id: string) {
     this.service.deleteItem(id).subscribe(() => console.log('Item deleted'));
   }
 
-  locateItem(id: number) {
-    this.service.locateItem(id).subscribe(() => console.log('Item located'));
+  locateItem(item: Item) {
+    this.service.locateItem(item).subscribe(() => console.log('Item located'));
   }
 
-  redirect() {
+  goToAdd() {
     this.router.navigate(['/add']);
   }
+
+  goToEdit(id: string) {
+    this.router.navigate(['/add', id]);
+  }
+
+  increaseQuantity(item: Item) {
+   this.service.increaseQuantity(item).subscribe();
+  }
+
+  decreaseQuantity(item: Item) {
+    this.service.decreaseQuantity(item).subscribe();
+  }
+
+  searchItems(s: any) {
+    if (s) {
+      this.items$ = this.service.items$.pipe(
+        map(items =>
+          items.filter(item =>
+            item.name.toLowerCase().includes(s.target.value.toLowerCase())
+          )
+        )
+      );
+    } else {
+      this.items$ = this.service.items$;
+    }
+  }
+
+
+
 
 }

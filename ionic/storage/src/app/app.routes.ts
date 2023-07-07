@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./add-item/add-item.component').then((m) => m.AddItemComponent),
   },
   {
+    path: 'add/:id',
+    loadComponent: () => import('./add-item/add-item.component').then((m) => m.AddItemComponent),
+  },
+  {
     path: '',
     redirectTo: 'list',
     pathMatch: 'full',

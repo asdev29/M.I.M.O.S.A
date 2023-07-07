@@ -5,24 +5,42 @@
 </ion-header>
 
 <ion-content>
+  <ion-searchbar show-clear-button="focus" placeholder="Search" (ionInput)="searchItems($event)"></ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let item of items$ | async">
       <ion-thumbnail slot="start">
-        <ion-img [src]="item.image"></ion-img>
+        <ion-img [src]="item.image ? item.image : null"></ion-img>
       </ion-thumbnail>
       <ion-label>
-        <h2>{{ item.name }}</h2>
-        <p>Position: {{ item.position }}</p>
-        <p>Quantity: {{ item.quantity }}</p>
-        <p>IP: {{ item.ip }}</p>
-        <ion-button fill="outline" size="small" color="danger" (click)="deleteItem(item.id)">Delete</ion-button>
-        <ion-button fill="outline" size="small" color="primary">Edit</ion-button>
-        <ion-button fill="outline" size="small" color="secondary" (click)="locateItem(item.id)">Locate</ion-button>
+        <ion-row>
+          <ion-col>
+            <h2>{{ item.name }}</h2>
+            <p>Position: {{ item.position }}</p>
+            <p>Quantity: {{ item.quantity }}</p>
+            <p>IP: {{ item.ip }}</p>
+          </ion-col>
+          <ion-col>
+            <div class="action-buttons">
+              <ion-button (click)="increaseQuantity(item)">+</ion-button>
+              <p>{{item.quantity}}</p>
+              <ion-button [disabled]="item.quantity === 1" (click)="decreaseQuantity(item)">-</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-button fill="outline" size="small" color="danger" (click)="deleteItem(item.id)">Delete</ion-button>
+        <ion-button fill="outline" size="small" color="primary" (click)="goToEdit(item.id)">Edit</ion-button>
+        <ion-button fill="outline" size="small" color="secondary" [disabled]="!item.ip" (click)="locateItem(item)">Locate</ion-button>
+        </ion-row>
+
+
+
       </ion-label>
+
     </ion-item>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click) = "redirect()">
+    <ion-fab-button (click) = "goToAdd()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

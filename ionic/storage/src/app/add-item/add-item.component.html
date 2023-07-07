@@ -1,41 +1,61 @@
+<!-- add-item.component.html -->
 <ion-header>
   <ion-toolbar>
-    <ion-title>Add Item</ion-title>
+    <ion-title>{{itemId ? 'Edit' : 'Add'}} Item</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-label>Name</ion-label>
+    <ion-item lines="none" class="custom-input" >
+      <ion-label position="floating">Name</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
+      <span slot="error">Name is required</span>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Link</ion-label>
+
+   <!--  <div *ngIf="addItemForm.get('name')?.invalid && addItemForm.get('name')?.touched" class="error-message">
+      Name is required
+    </div> -->
+
+
+    <ion-item lines="none">
+      <ion-label position="floating">Link</ion-label>
       <ion-input type="text" formControlName="link"></ion-input>
+      <span slot="error"> Link must be a valid URL</span>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Image</ion-label>
+    <ion-item lines="none">
+      <ion-label position="floating">Image</ion-label>
       <ion-input type="text" formControlName="image"></ion-input>
+      <span slot="error"> Image must be a valid URL</span>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Position</ion-label>
-      <ion-input type="text" formControlName="position"></ion-input>
+    <ion-item lines="none">
+      <ion-label position="floating">Position</ion-label>
+      <ion-input type="number" formControlName="position"></ion-input>
+      <span slot="error"> Position is required </span>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Quantity</ion-label>
+    <ion-item lines="none">
+      <ion-label position="floating">Quantity</ion-label>
       <ion-input type="number" formControlName="quantity"></ion-input>
+      <span slot="error"> Quantity is required and has to be greater than 0</span>
     </ion-item>
 
-    <ion-item>
-      <ion-label>IP</ion-label>
+    <ion-item lines="none">
+      <ion-label position="floating">IP</ion-label>
       <ion-input type="text" formControlName="ip"></ion-input>
+      <span slot="error"> IP Format is invalids</span>
     </ion-item>
 
-    <ion-button expand="full" type="submit" [disabled]="!addItemForm.valid">Add Item</ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" type="submit" [disabled]="!addItemForm.valid">Save</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="light" (click)="back()">Back</ion-button>
+      </ion-col>
+    </ion-row>
   </form>
 </ion-content>
