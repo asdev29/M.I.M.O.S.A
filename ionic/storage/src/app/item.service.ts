@@ -1,59 +1,75 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { Item } from './model';
 import { environment } from 'src/environments/environment';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ItemService {
-  private itemsSubject: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+  private itemsSubject: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(
+    []
+  );
   items$: Observable<Item[]> = this.itemsSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.fetchItems();
+  constructor(
+    private http: HttpClient,
+    private toastController: ToastController
+  ) {
+    this.fetchItems().subscribe();
   }
 
   fetchItems() {
-    this.http.get<Item[]>(`${environment.baseUrl}/items`)
-      .pipe(tap(items => this.itemsSubject.next(items)))
-      .subscribe();
+    return this.http
+      .get<Item[]>(`${environment.baseUrl}/items`)
+      .pipe(tap((items) => this.itemsSubject.next(items)));
   }
 
   addItem(item: any) {
-    return this.http.post<Item>(`${environment.baseUrl}/items`, item)
-      .pipe(tap(i => {
+    return this.http.post<Item>(`${environment.baseUrl}/items`, item).pipe(
+      tap((i) => {
         const items = this.itemsSubject.getValue();
         this.itemsSubject.next([...items, i]);
-      }));
+        this.showToast('Item added successfully');
+      })
+    );
   }
 
   deleteItem(itemId: number) {
-    return this.http.delete(`${environment.baseUrl}/items/${itemId}`)
-      .pipe(tap(() => {
+    return this.http.delete(`${environment.baseUrl}/items/${itemId}`).pipe(
+      tap(() => {
         const items = this.itemsSubject.getValue();
-        this.itemsSubject.next(items.filter(item => item.id !== itemId));
-      }));
+        this.itemsSubject.next(items.filter((item) => item.id !== itemId));
+        this.showToast('Item deleted successfully');
+      })
+    );
   }
 
   locateItem(itemId: number) {
-    // Assuming your server returns the updated item after the locate action
-    return this.http.get<Item>(environment.baseUrl+`/items/locate/${itemId}`)
-      .pipe(tap(updatedItem => {
-        const items = this.itemsSubject.getValue();
-        const updatedItems = items.map(item => item.id === updatedItem.id ? updatedItem : item);
-        this.itemsSubject.next(updatedItems);
-      }));
+    return this.http.get<Item>(environment.baseUrl + `/items/locate/${itemId}`);
   }
 
-  editItem(updatedItem: Item) {
-    return this.http.put<Item>(`${environment.baseUrl}/items/${updatedItem.id}`, updatedItem)
-      .pipe(tap(updatedItem => {
-        const items = this.itemsSubject.getValue();
-        const updatedItems = items.map(item => item.id === updatedItem.id ? updatedItem : item);
-        this.itemsSubject.next(updatedItems);
-      }));
+  editItem(id: number, updatedItem: any) {
+    return this.http
+      .put<Item>(`${environment.baseUrl}/items/${id}`, updatedItem)
+      .pipe(
+        switchMap(() => this.fetchItems()),
+        tap((items) => {
+          this.itemsSubject.next(items);
+          this.showToast('Item updated successfully');
+        })
+      );
+  }
+
+  async showToast(message: string, color: string = 'success') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      color,
+    });
+    toast.present();
   }
 }
