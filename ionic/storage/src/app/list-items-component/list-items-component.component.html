@@ -6,51 +6,56 @@
 
 <ion-content>
   <ion-searchbar show-clear-button="focus" placeholder="Search" (ionInput)="searchItems($event)"></ion-searchbar>
-  <ion-list>
-    <ion-item *ngFor="let item of items$ | async" class="item-card">
-      <ion-grid>
-        <ion-row>
-          <h2>{{ item.name }}</h2>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" size-lg="4" size-xl="3" *ngFor="let item of items$ | async">
+        <ion-item class="item-card">
+          <ion-grid>
+            <ion-row>
+              <h2>{{ item.name }}</h2>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6">
 
-            <p>Position: {{ item.position }}</p>
-            <p>Quantity: {{ item.quantity }}</p>
-            <p>IP: {{ item.ip }}</p>
-          </ion-col>
-          <ion-col size="6">
-            <div class="img-container">
-              <ion-img [src]="item.image ? item.image : null"></ion-img>
-            </div>
-          </ion-col>
+                <p>Position: {{ item.position }}</p>
+                <p>Quantity: {{ item.quantity }}</p>
+                <p>IP: {{ item.ip }}</p>
+              </ion-col>
+              <ion-col size="6">
+                <div class="img-container">
+                  <ion-img [src]="item.image ? item.image : null"></ion-img>
+                </div>
+              </ion-col>
 
-        </ion-row>
-        <ion-row class="full-width-row">
-              <ion-button fill="outline" size="small" color="primary" (click)="goToEdit(item.id)">
-                <ion-icon name="create-outline"></ion-icon>  <!-- Edit Icon -->
-            </ion-button>
-            <ion-button fill="outline" size="small" color="danger" (click)="deleteItem(item.id)">
-                <ion-icon name="trash-outline"></ion-icon>  <!-- Delete Icon -->
-            </ion-button>
-            <ion-button fill="outline" size="small" color="secondary" [disabled]="!item.ip" (click)="locateItem(item)">
-              <ion-icon name="locate-outline"></ion-icon>  <!-- Locate Icon -->
-          </ion-button>
-          <ion-button fill="outline" size="small" color="secondary" [disabled]="!item.link" (click)="openLink(item.link)">
-              <ion-icon name="cart-outline"></ion-icon>  <!-- Buy Icon -->
-          </ion-button>
+            </ion-row>
+            <ion-row class="full-width-row">
+                  <ion-button fill="outline" size="small" color="primary" (click)="goToEdit(item.id)">
+                    <ion-icon name="create-outline"></ion-icon>  <!-- Edit Icon -->
+                </ion-button>
+                <ion-button fill="outline" size="small" color="danger" (click)="deleteItem(item.id)">
+                    <ion-icon name="trash-outline"></ion-icon>  <!-- Delete Icon -->
+                </ion-button>
+                <ion-button fill="outline" size="small" color="secondary" [disabled]="!item.ip" (click)="locateItem(item)">
+                  <ion-icon name="locate-outline"></ion-icon>  <!-- Locate Icon -->
+              </ion-button>
+              <ion-button fill="outline" size="small" color="secondary" [disabled]="!item.link" (click)="openLink(item.link)">
+                  <ion-icon name="cart-outline"></ion-icon>  <!-- Buy Icon -->
+              </ion-button>
 
 
-        </ion-row>
-        <ion-row class="ion-align-items-center ion-justify-content-center">
-          <ion-button [disabled]="item.quantity === 1" (click)="decreaseQuantity(item)">-</ion-button>
-          <span class="quantity">{{item.quantity}}</span>
-          <ion-button (click)="increaseQuantity(item)">+</ion-button>
-      </ion-row>
+            </ion-row>
+            <ion-row class="ion-align-items-center ion-justify-content-center">
+              <ion-button [disabled]="item.quantity === 1" (click)="decreaseQuantity(item)">-</ion-button>
+              <span class="quantity">{{item.quantity}}</span>
+              <ion-button (click)="increaseQuantity(item)">+</ion-button>
+          </ion-row>
 
-      </ion-grid>
-    </ion-item>
-  </ion-list>
+          </ion-grid>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 
 
 
