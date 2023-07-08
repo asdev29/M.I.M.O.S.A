@@ -16,7 +16,6 @@ import { ItemService } from '../item.service';
   imports: [IonicModule, CommonModule],
 })
 export class ListItemsComponentComponent implements OnInit {
-
   items$: Observable<Item[]> = this.service.items$;
   searchTerm = '';
 
@@ -27,6 +26,10 @@ export class ListItemsComponentComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  openLink(link: string) {
+    window.open(link, "_blank");
+  }
 
   deleteItem(id: string) {
     this.service.deleteItem(id).subscribe(() => console.log('Item deleted'));
@@ -45,7 +48,7 @@ export class ListItemsComponentComponent implements OnInit {
   }
 
   increaseQuantity(item: Item) {
-   this.service.increaseQuantity(item).subscribe();
+    this.service.increaseQuantity(item).subscribe();
   }
 
   decreaseQuantity(item: Item) {
@@ -55,8 +58,8 @@ export class ListItemsComponentComponent implements OnInit {
   searchItems(s: any) {
     if (s) {
       this.items$ = this.service.items$.pipe(
-        map(items =>
-          items.filter(item =>
+        map((items) =>
+          items.filter((item) =>
             item.name.toLowerCase().includes(s.target.value.toLowerCase())
           )
         )
@@ -65,8 +68,4 @@ export class ListItemsComponentComponent implements OnInit {
       this.items$ = this.service.items$;
     }
   }
-
-
-
-
 }

@@ -1,10 +1,10 @@
 /* add-item.component.css */
 ion-content {
-  --background: #f8f9fa;
+  --background: var(--ion-color-step-50); /* Background color */
 }
 
 ion-item {
-  background-color: white;
+  background-color: var(--ion-color-step-50); /* Item background color */
   border-radius: 5px;
   margin-bottom: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
@@ -12,13 +12,13 @@ ion-item {
 
 ion-button {
   font-weight: bold;
-  --background: #007bff;
-  --color: white;
+  --background: var(--ion-color-primary); /* Button color */
+  --color: var(--ion-color-primary-contrast); /* Text color */
   margin-top: 20px;
 }
 
 .error-message {
-  color: red;
+  color: var(--ion-color-danger); /* Error color */
   margin-left: 20px;
   margin-bottom: 10px;
 }

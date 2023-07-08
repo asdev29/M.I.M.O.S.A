@@ -1,13 +1,9 @@
-<!-- add-item.component.html -->
-<!-- add-item.component.html -->
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{itemId ? 'Edit' : 'Add'}} Item</ion-title>
     <ion-title>{{itemId ? 'Edit' : 'Add'}} Item</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
 <ion-content class="ion-padding">
   <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
 
